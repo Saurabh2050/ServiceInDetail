@@ -22,6 +22,7 @@ public class ServiceInDetail  extends Service{
 
     private static final String TAG = ServiceInDetail.class.getSimpleName();
     private Thread thread;
+    private MediaPlayer medialayer;
 
 
     @Override
@@ -39,16 +40,17 @@ public class ServiceInDetail  extends Service{
         Log.i(TAG, "ServiceInDetail onStartCommand "+flags );
 
         //TODO how will you stop the running thread when stoping the service
-        runningThreadFromOnStartCommnd();
+        //runningThreadFromOnStartCommnd();
 
         //Start Playing audio
-        //startPlayingAudio();
+        medialayer = startPlayingAudio();
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void startPlayingAudio() {
+    private MediaPlayer startPlayingAudio() {
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.test_audio);
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
+        return mediaPlayer;
     }
 
     private void runningThreadFromOnStartCommnd() {
@@ -70,7 +72,13 @@ public class ServiceInDetail  extends Service{
     public void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "ServiceInDetail onDestroy");
-        thread.interrupt();
+        //thread.interrupt();
+        stopMediaPlayer();
+    }
+
+    public void stopMediaPlayer(){
+        medialayer.release();
+        medialayer = null;
     }
 
     @Override
