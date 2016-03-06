@@ -18,12 +18,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Launch Webview"
+        android:id="@+id/launchwebview"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_alignParentRight="true"
+
+       />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Start Service"
         android:id="@+id/startbutton"
         android:layout_below="@+id/textView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="108dp" />
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="wrap_content"

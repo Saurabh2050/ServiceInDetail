@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.exampe.service.ServiceInDetail;
+import com.example.android.webviewindetail.MyWebView;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,6 +45,8 @@ public class MainActivityFragment extends Fragment {
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // To demonstrate Activity life cycle
 //                Intent launchSecond = new Intent(getActivity(), SecondActivity.class);
 //                getActivity().startActivity(launchSecond);
                 Intent serviceIntent = new Intent(getActivity(), ServiceInDetail.class);
@@ -51,6 +54,19 @@ public class MainActivityFragment extends Fragment {
 
             }
         });
+        Button launchWebview = (Button) view.findViewById(R.id.launchwebview);
+        launchWebview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchWebviewActivity();
+
+            }
+        });
         return view;
+    }
+
+    private void launchWebviewActivity() {
+        Intent webViewIntent = new Intent(getActivity(), MyWebView.class);
+        getActivity().startActivity(webViewIntent);
     }
 }
