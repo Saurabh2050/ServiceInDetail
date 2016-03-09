@@ -1,5 +1,6 @@
 package com.example.android.webviewindetail;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -46,6 +47,11 @@ public class MyWebView extends AppCompatActivity implements View.OnClickListener
         WebSettings websettings = mywebview.getSettings();
         // used for calling andoid methods from javascript and javascript functions from android
         websettings.setJavaScriptEnabled(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+
 
        //this has been added to add show aler dialog on web view, find more reasons and difference between webviewclient and webchromeclient
         mywebview.setWebChromeClient(new WebChromeClient());
