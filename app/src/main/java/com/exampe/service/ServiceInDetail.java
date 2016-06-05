@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.android.mediaplayer.CustomMediaPlayer;
 import com.example.android.serviceindetail.R;
 
 import java.io.FileDescriptor;
@@ -23,11 +24,13 @@ public class ServiceInDetail  extends Service{
     private static final String TAG = ServiceInDetail.class.getSimpleName();
     private Thread thread;
     private MediaPlayer medialayer;
+    private MediaPlayer mediaPlayer;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
+         mediaPlayer = CustomMediaPlayer.create(this, R.raw.test_audio);
         Log.i(TAG, "ServiceInDetail onCreate");
     }
 
@@ -37,18 +40,28 @@ public class ServiceInDetail  extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "ServiceInDetail onStartCommand "+flags );
+        Log.i(TAG, "ServiceInDetail onStartCommand "+intent+" "+flags+" "+startId );
 
         //TODO how will you stop the running thread when stoping the service
         //runningThreadFromOnStartCommnd();
 
         //Start Playing audio
         medialayer = startPlayingAudio();
-        return super.onStartCommand(intent, flags, startId);
+        int onStartReturnFlag = super.onStartCommand(intent, flags, startId);
+       // int onStartReturnFlag =Service.START_NOT_STICKY;
+        //int onStartReturnFlag =Service.START_REDELIVER_INTENT ;
+        //int onStartReturnFlag =Service.START_STICKY;
+
+        //int onStartReturnFlag =Service.START_CONTINUATION_MASK;
+        //int onStartReturnFlag =Service.START_FLAG_REDELIVERY;
+        //int onStartReturnFlag =Service.START_FLAG_RETRY;
+        Log.i(TAG, "ServiceInDetail onStartCommand r "+intent+" "+flags+" "+startId +" "+onStartReturnFlag);
+        return onStartReturnFlag;
     }
 
     private MediaPlayer startPlayingAudio() {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.test_audio);
+
+        if(!mediaPlayer.isPlaying())
         mediaPlayer.start(); // no need to call prepare(); create() does that for you
         return mediaPlayer;
     }
